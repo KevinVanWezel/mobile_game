@@ -7,36 +7,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    private PlayerInput _input;
     private Rigidbody _rigidbody;
     private Vector3 _inputDirection;
+
     void Start()
     {
+        _input = GetComponent<PlayerInput>();
         _rigidbody = GetComponent<Rigidbody>();
-
-
     }
-   
     void Update()
     {
-
-
-        if (Input.GetKeyDown("space"))
-        {
-            transform.Translate(Vector3.up * 50 * Time.deltaTime, Space.World);
-        }
-       
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        _inputDirection = new Vector3(x, 0f, z);
-
-
+        float x = _input.getXspeed();
+        float z = _input.getZspeed();
+        _inputDirection = new Vector3(x, 0f, z).normalized;
     }
     void FixedUpdate()
     {
-       
         _rigidbody.AddForce(_inputDirection * speed);
     }
    
-
+    
    
 }
